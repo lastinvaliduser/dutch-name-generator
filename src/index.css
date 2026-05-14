@@ -543,27 +543,29 @@ body {
   text-align: left;
 }
 .about-modal h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
   color: var(--accent-color);
 }
 .about-modal h3 {
-  font-size: 1.2rem;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.4rem;
 }
 .about-modal p {
-  line-height: 1.5;
-  margin-bottom: 1rem;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
   color: var(--text-primary);
 }
 .about-modal ul {
   padding-left: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 .about-modal li {
-  line-height: 1.5;
-  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
   color: var(--text-primary);
 }
 .about-modal a {
@@ -575,25 +577,24 @@ body {
   text-decoration: underline;
 }
 .about-modal .copyright {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   margin-bottom: 0.25rem;
 }
 .about-modal .contact {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
 }
 
-/* Modals */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   display: flex;
@@ -607,11 +608,13 @@ body {
 .modal-content {
   width: 100%;
   max-width: 500px;
-  background: var(--surface-color);
-  max-height: 90vh;
+  background: var(--bg-color); /* Removed transparency */
+  max-height: 95vh;
   overflow-y: auto;
   border-radius: 16px;
-  padding: 2rem;
+  padding: 1.5rem;
   position: relative;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-color);
 }
+

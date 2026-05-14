@@ -113,9 +113,12 @@ function App() {
               <li><strong>Privacy First:</strong> This site does not collect, store, or transmit any personal data. All processing happens entirely in your browser — no cookies, no databases, no analytics.</li>
             </ul>
 
-            <h3>Open Source</h3>
-            {/* TODO: Replace with your actual GitHub repo URL */}
-            <p>This project was built to explore the speed of AI-assisted development. The source code is publicly available on GitHub.</p>
+            <h3>Open Source & Links</h3>
+            <p>This project was built to explore the speed of AI-assisted development. The source code is publicly available on <a href="https://github.com/lastinvaliduser/dutch-name-generator" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+            <p>Try it out live at <a href="https://dutch-name-generator.vercel.app/" target="_blank" rel="noopener noreferrer">dutch-name-generator.vercel.app</a>.</p>
+
+            <h3>Terms & Conditions</h3>
+            <p>This application is provided "as is" for entertainment purposes only. The generated names are created algorithmically and are not official or legally binding translations. By using this site, you agree that the developers are not liable for any issues arising from its use.</p>
 
             <p className="copyright">&copy; {new Date().getFullYear()} Dutch Name Generator</p>
             <button className="btn-primary" onClick={() => setShowAbout(false)}>Close</button>

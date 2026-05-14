@@ -4,17 +4,26 @@ import ResultCard from './components/ResultCard';
 import { generateDutchName, NameOption } from './utils/nameMapper';
 import { FormData } from './components/NameForm';
 
+const COUNTRY_THEMES: Record<string, { bg: string; accent: string }> = {
+  english: { bg: '#1e1b4b', accent: '#ef4444' },
+  french: { bg: '#172554', accent: '#dc2626' },
+  spanish: { bg: '#451a03', accent: '#eab308' },
+  german: { bg: '#171717', accent: '#eab308' },
+  italian: { bg: '#064e3b', accent: '#ef4444' },
+  polish: { bg: '#7f1d1d', accent: '#f8fafc' },
+  turkish: { bg: '#991b1b', accent: '#f8fafc' }
+};
+
 const applyFunTheme = (countryStr: string | undefined) => {
   if (!countryStr) return;
   const c = countryStr.toLowerCase();
+  
   let bg, accent;
 
-  if (c === 'english') { bg = '#1e1b4b'; accent = '#ef4444'; }
-  else if (c === 'french') { bg = '#172554'; accent = '#dc2626'; }
-  else if (c === 'spanish') { bg = '#451a03'; accent = '#eab308'; }
-  else if (c === 'german') { bg = '#171717'; accent = '#eab308'; }
-  else if (c === 'italian') { bg = '#064e3b'; accent = '#ef4444'; }
-  else {
+  if (COUNTRY_THEMES[c]) {
+    bg = COUNTRY_THEMES[c].bg;
+    accent = COUNTRY_THEMES[c].accent;
+  } else {
     let hash = 0;
     for (let i = 0; i < c.length; i++) hash = c.charCodeAt(i) + ((hash << 5) - hash);
     const hue = Math.abs(hash % 360);

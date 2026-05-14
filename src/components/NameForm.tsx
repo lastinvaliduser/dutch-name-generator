@@ -3,7 +3,20 @@ import Select from 'react-select';
 import { nationalities } from '../utils/nameMapper';
 import { allCountries } from '../utils/allCountries';
 
-const NameForm = ({ onSubmit, isLoading, onNationalityChange }) => {
+export interface FormData {
+  firstName: string;
+  lastName: string;
+  nationality: string;
+  gender: string;
+}
+
+interface NameFormProps {
+  onSubmit: (data: FormData) => void;
+  isLoading: boolean;
+  onNationalityChange?: (nationality: string) => void;
+}
+
+const NameForm = ({ onSubmit, isLoading, onNationalityChange }: NameFormProps) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [nationality, setNationality] = useState('english');
@@ -16,7 +29,7 @@ const NameForm = ({ onSubmit, isLoading, onNationalityChange }) => {
     }
   }, [nationality, customNationality, onNationalityChange]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const cleanFirst = firstName.trim().replace(/[<>]/g, '').substring(0, 50);
     const cleanLast = lastName.trim().replace(/[<>]/g, '').substring(0, 50);

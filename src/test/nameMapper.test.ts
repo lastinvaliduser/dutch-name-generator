@@ -15,28 +15,28 @@ describe('generateDutchName', () => {
 
   it('uses direct translation when a known name is given', () => {
     const results = generateDutchName('John', 'Smith', 'english', 'any');
-    const directOption = results.find(r => r.type === 'Direct Translation');
+    const directOption = results!.find(r => r.type === 'Direct Translation');
     expect(directOption).toBeDefined();
-    expect(directOption.isMapped).toBe(true);
-    expect(directOption.fullName).toContain('Jan');
+    expect(directOption!.isMapped).toBe(true);
+    expect(directOption!.fullName).toContain('Jan');
   });
 
   it('uses "Closest Match" when no translation exists', () => {
     const results = generateDutchName('Zxywq', 'Unknown', 'english', 'any');
-    const closest = results.find(r => r.type === 'Closest Match');
+    const closest = results!.find(r => r.type === 'Closest Match');
     expect(closest).toBeDefined();
-    expect(closest.isMapped).toBe(false);
+    expect(closest!.isMapped).toBe(false);
   });
 
   it('always includes a "Classic Pick" and a "Modern Choice"', () => {
     const results = generateDutchName('John', 'Smith', 'english', 'any');
-    expect(results.find(r => r.type === 'Classic Pick')).toBeDefined();
-    expect(results.find(r => r.type === 'Modern Choice')).toBeDefined();
+    expect(results!.find(r => r.type === 'Classic Pick')).toBeDefined();
+    expect(results!.find(r => r.type === 'Modern Choice')).toBeDefined();
   });
 
   it('every result has fullName and meaning', () => {
     const results = generateDutchName('Emily', 'Brown', 'english', 'female');
-    results.forEach(r => {
+    results!.forEach(r => {
       expect(r.fullName).toBeTruthy();
       expect(r.meaning).toBeTruthy();
     });
@@ -51,36 +51,36 @@ describe('generateDutchName', () => {
   it('produces different results for different names', () => {
     const a = generateDutchName('John', 'Smith', 'english', 'male');
     const b = generateDutchName('Emily', 'Brown', 'english', 'female');
-    expect(a[0].fullName).not.toEqual(b[0].fullName);
+    expect(a![0].fullName).not.toEqual(b![0].fullName);
   });
 
   it('respects gender=female — uses female name pool', () => {
     const results = generateDutchName('Zxywq', 'Test', 'english', 'female');
     // The closest match should come from the female names pool
     const femaleNames = ['Emma', 'Julia', 'Mila', 'Tess', 'Sophie', 'Zoe', 'Sara', 'Nora', 'Yara', 'Lotte', 'Sanne', 'Lieke', 'Roos', 'Maud', 'Fleur'];
-    const closestFirstName = results[0].fullName.split(' ')[0];
+    const closestFirstName = results![0].fullName.split(' ')[0];
     expect(femaleNames).toContain(closestFirstName);
   });
 
   it('respects gender=male — uses male name pool', () => {
     const results = generateDutchName('Zxywq', 'Test', 'english', 'male');
     const maleNames = ['Daan', 'Sem', 'Lucas', 'Milan', 'Levi', 'Luuk', 'Bram', 'Finn', 'Jesse', 'Max', 'Lars', 'Thijs', 'Niels', 'Koen', 'Bas'];
-    const closestFirstName = results[0].fullName.split(' ')[0];
+    const closestFirstName = results![0].fullName.split(' ')[0];
     expect(maleNames).toContain(closestFirstName);
   });
 
   it('handles Spanish names with direct translations', () => {
     const results = generateDutchName('Juan', 'Garcia', 'spanish', 'male');
-    const direct = results.find(r => r.type === 'Direct Translation');
+    const direct = results!.find(r => r.type === 'Direct Translation');
     expect(direct).toBeDefined();
-    expect(direct.fullName).toContain('Jan');
+    expect(direct!.fullName).toContain('Jan');
   });
 
   it('handles French names with direct translations', () => {
     const results = generateDutchName('Pierre', 'Dupont', 'french', 'male');
-    const direct = results.find(r => r.type === 'Direct Translation');
+    const direct = results!.find(r => r.type === 'Direct Translation');
     expect(direct).toBeDefined();
-    expect(direct.fullName).toContain('Pieter');
+    expect(direct!.fullName).toContain('Pieter');
   });
 
   it('is case-insensitive for first name lookup', () => {

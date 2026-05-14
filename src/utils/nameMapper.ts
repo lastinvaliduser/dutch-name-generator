@@ -4,7 +4,6 @@ export const nationalities = [
   { id: 'french', label: 'French', flag: '🇫🇷' },
   { id: 'german', label: 'German', flag: '🇩🇪' },
   { id: 'italian', label: 'Italian', flag: '🇮🇹' },
-  { id: 'polish', label: 'Polish', flag: '🇵🇱' },
   { id: 'turkish', label: 'Turkish', flag: '🇹🇷' },
   { id: 'other', label: 'Rest of the world', flag: '🌍' }
 ];
@@ -44,6 +43,7 @@ const commonDutchLastNames = [
 ];
 
 const nameMeanings = {
+  // English mappings
   "Jan": "God is gracious", "Willem": "Resolute protector", "Pieter": "Rock", "Maria": "Wished-for child",
   "Sjors": "Farmer", "Jacob": "Supplanter", "Karel": "Free man", "Richard": "Brave ruler",
   "Michiel": "Who is like God?", "David": "Beloved", "Jozef": "God will add", "Thomas": "Twin",
@@ -52,25 +52,39 @@ const nameMeanings = {
   "Bram": "Father of multitudes", "Saar": "Princess", "Lijsbeth": "God is my oath", "Jessica": "Foresight",
   "Maaike": "Bitter/Beloved", "Rian": "Little king", "Jaap": "Supplanter", "Anna": "Grace",
   "Isabella": "Devoted to God", "Lodewijk": "Famous warrior", "Dirk": "Ruler of the people", "Hendrik": "Home ruler",
-  "Sjaak": "Supplanter", "Emma": "Whole or universal", "Sophie": "Wisdom", "Julia": "Youthful",
+  "Sjaak": "Supplanter", "Emma": "Universal", "Sophie": "Wisdom", "Julia": "Youthful",
   "Mila": "Gracious", "Tess": "Harvester", "Lotte": "Free woman", "Zoe": "Life",
   "Fleur": "Flower", "Roos": "Rose", "Sem": "Renown", "Lucas": "Bringer of light",
   "Daan": "God is my judge", "Levi": "Attached", "Luuk": "Bringer of light", "Mees": "Son of Talmai",
-  "Noud": "Eagle ruler", "Finn": "Fair", "Milan": "Gracious", "Jesse": "Gift"
+  "Noud": "Eagle ruler", "Finn": "Fair", "Milan": "Gracious", "Jesse": "Gift",
+
+  // Extended Female
+  "Sanne": "Lily", "Lieke": "Angelic", "Maud": "Mighty in battle", "Fien": "He will add",
+  "Elin": "Sun ray", "Liv": "Life", "Luna": "Moon", "Noa": "Motion",
+  "Yara": "Water lady", "Nora": "Light", "Sara": "Princess", "Evi": "Life",
+  "Eva": "Life", "Fenja": "Peaceful", "Milou": "Famous warrior", "Suus": "Lily",
+  "Isa": "God is my oath", "Floor": "Flourishing", "Merel": "Blackbird", "Sterre": "Star",
+
+  // Extended Male
+  "Max": "Greatest", "Lars": "Crowned with laurel", "Thijs": "Gift of God", "Niels": "Victory of the people",
+  "Koen": "Bold advisor", "Bas": "Venerable", "Guus": "Staff of the Goths", "Jurre": "Strong",
+  "Vigo": "War", "Boaz": "Swiftness", "Tim": "Honoring God", "Stijn": "Stone",
+  "Ruben": "Behold, a son", "Jeroen": "Holy name", "Martijn": "Of Mars", "Joris": "Farmer",
+  "Teun": "Priceless", "Gijs": "Bright pledge", "Jelle": "Value", "Wout": "Ruler of the army"
 };
 
-const getMeaning = (firstName) => {
-  return nameMeanings[firstName] || "A beautiful classic Dutch name";
+const getMeaning = (firstName: string): string => {
+  return (nameMeanings as Record<string, string>)[firstName] || "A beautiful classic Dutch name";
 };
 
-const maleNames = ["Daan", "Sem", "Lucas", "Milan", "Levi", "Luuk", "Bram", "Finn", "Jesse", "Max", "Lars", "Thijs", "Niels", "Koen", "Bas"];
-const femaleNames = ["Emma", "Julia", "Mila", "Tess", "Sophie", "Zoe", "Sara", "Nora", "Yara", "Lotte", "Sanne", "Lieke", "Roos", "Maud", "Fleur"];
-const modernNames = ["Mees", "Guus", "Jurre", "Vigo", "Boaz", "Noa", "Liv", "Elin", "Luna", "Fien"];
+const maleNames = ["Daan", "Sem", "Lucas", "Milan", "Levi", "Luuk", "Bram", "Finn", "Jesse", "Max", "Lars", "Thijs", "Niels", "Koen", "Bas", "Tim", "Stijn", "Ruben", "Jeroen", "Martijn", "Joris", "Teun", "Gijs", "Jelle", "Wout"];
+const femaleNames = ["Emma", "Julia", "Mila", "Tess", "Sophie", "Zoe", "Sara", "Nora", "Yara", "Lotte", "Sanne", "Lieke", "Roos", "Maud", "Fleur", "Evi", "Eva", "Fenja", "Milou", "Suus", "Isa", "Floor", "Merel", "Sterre"];
+const modernNames = ["Mees", "Guus", "Jurre", "Vigo", "Boaz", "Noa", "Liv", "Elin", "Luna", "Fien", "Noud", "Sem", "Finn", "Mila", "Zoe"];
 
 /**
  * Hash string to a number
  */
-const hashCode = (str) => {
+const hashCode = (str: string): number => {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
@@ -80,7 +94,14 @@ const hashCode = (str) => {
   return Math.abs(hash);
 };
 
-export const generateDutchName = (firstName, lastName, nationalityId, gender) => {
+export interface NameOption {
+  type: string;
+  fullName: string;
+  isMapped: boolean;
+  meaning: string;
+}
+
+export const generateDutchName = (firstName: string, lastName: string, nationalityId: string, gender: string): NameOption[] | null => {
   const normalizedFirstName = firstName.trim().toLowerCase();
   const normalizedLastName = lastName.trim().toLowerCase();
 
@@ -104,8 +125,8 @@ export const generateDutchName = (firstName, lastName, nationalityId, gender) =>
   const altLastName1 = commonDutchLastNames[(hashLast + 1) % commonDutchLastNames.length];
   const altLastName2 = commonDutchLastNames[(hashLast + 2) % commonDutchLastNames.length];
 
-  let exactTranslation = nameDictionary[normalizedFirstName];
-  const options = [];
+  let exactTranslation = (nameDictionary as Record<string, string>)[normalizedFirstName];
+  const options: NameOption[] = [];
 
   if (exactTranslation) {
     options.push({

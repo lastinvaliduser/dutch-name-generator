@@ -1,4 +1,12 @@
-const ResultCard = ({ results, originalName, onReset }) => {
+import { NameOption } from '../utils/nameMapper';
+
+interface ResultCardProps {
+  results: NameOption[] | null;
+  originalName: string | null;
+  onReset: () => void;
+}
+
+const ResultCard = ({ results, originalName, onReset }: ResultCardProps) => {
   if (!results || !results.length) return null;
 
   return (

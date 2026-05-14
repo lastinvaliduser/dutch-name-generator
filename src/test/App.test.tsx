@@ -8,7 +8,7 @@ vi.mock('../index.css', () => ({}));
 vi.mock('../App.css', () => ({}));
 
 describe('App — User Behaviour', () => {
-  let user;
+  let user: ReturnType<typeof userEvent.setup>;
 
   beforeEach(() => {
     user = userEvent.setup();
@@ -160,7 +160,7 @@ describe('App — User Behaviour', () => {
 });
 
 describe('App — Theme Switching', () => {
-  let user;
+  let user: ReturnType<typeof userEvent.setup>;
 
   beforeEach(() => {
     user = userEvent.setup();
@@ -204,7 +204,7 @@ describe('App — Theme Switching', () => {
 });
 
 describe('App — About Modal', () => {
-  let user;
+  let user: ReturnType<typeof userEvent.setup>;
 
   beforeEach(() => {
     user = userEvent.setup();
@@ -243,7 +243,7 @@ describe('App — About Modal', () => {
 
     // Click the overlay (parent modal-overlay div)
     const overlay = document.querySelector('.modal-overlay');
-    await user.click(overlay);
+    await user.click(overlay!);
     expect(screen.queryByText(/about dutch name generator/i)).not.toBeInTheDocument();
   });
 });

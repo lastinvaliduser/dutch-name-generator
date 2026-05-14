@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import NameForm from './components/NameForm';
 import ResultCard from './components/ResultCard';
-import { generateDutchName } from './utils/nameMapper';
+import { generateDutchName, NameOption } from './utils/nameMapper';
+import { FormData } from './components/NameForm';
 
-const applyFunTheme = (countryStr) => {
+const applyFunTheme = (countryStr: string | undefined) => {
   if (!countryStr) return;
   const c = countryStr.toLowerCase();
   let bg, accent;
@@ -28,8 +29,8 @@ const applyFunTheme = (countryStr) => {
 };
 
 function App() {
-  const [results, setResults] = useState(null);
-  const [originalName, setOriginalName] = useState(null);
+  const [results, setResults] = useState<NameOption[] | null>(null);
+  const [originalName, setOriginalName] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [theme, setTheme] = useState('dark');
   const [currentCountry, setCurrentCountry] = useState('english');
@@ -44,7 +45,7 @@ function App() {
     }
   }, [theme, currentCountry]);
 
-  const handleGenerate = (data) => {
+  const handleGenerate = (data: FormData) => {
     setIsGenerating(true);
 
     setTimeout(() => {
